@@ -23,5 +23,5 @@ jobs:
 workflows:
   build-and-notify:
     jobs:
-      - build-test-and-notify
-          # context: slack-notifications
+      - build-test-and-notify:
+          context: slack-notifications
