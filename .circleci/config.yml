@@ -14,11 +14,11 @@ jobs:
       - run: npm test
       - slack/notify:
           event: pass
-          mentions: '@josh.jimenez'
+          mentions: '@channel'
           template: basic_success_1
       - slack/notify:
           event: fail
-          mentions: "@josh.jimenez"
+          mentions: "@channel"
           template: basic_fail_1
 workflows:
   build-and-notify:
