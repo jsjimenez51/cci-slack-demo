@@ -19,4 +19,4 @@ jobs:
 workflows:
   build-and-notify:
     jobs:
-      -built-test-and-notify
+      - built-test-and-notify
