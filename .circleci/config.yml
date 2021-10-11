@@ -16,7 +16,7 @@ jobs:
           event: pass
           mentions: '@josh.jimenez'
           template: basic_success_1
-      - slack/status:
+      - slack/notify:
           fail_only: true
           mentions: "@josh.jimenez"
           template: basic_fail_1
