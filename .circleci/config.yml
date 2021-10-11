@@ -1,8 +1,6 @@
 version: 2.1
-
 orbs:
   node: circleci/node@4.7.0
-
 jobs:
   build-test-and-notify:
     executor:
@@ -12,11 +10,8 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
-      - run:
-          name: Run Tests
-          command: npm test
-
+      - run: npm test
 workflows:
   build-and-notify:
     jobs:
-      - built-test-and-notify
+      - build-test-and-notify
