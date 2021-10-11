@@ -13,12 +13,13 @@ jobs:
           command: npm install
       - run: npm test
       - slack/notify:
-        color: "#42e2f4"
-        mentions: "josh.jimenez"
-        message: A custom message to notify the channel about the latest build
+          event: pass
+          mentions: '@josh.jimenez'
+          template: basic_success_1
       - slack/status:
-        fail_only: true
-        mentions: "josh.jimenez"
+          fail_only: true
+          mentions: "@josh.jimenez"
+          template: basic_fail_1
 workflows:
   build-and-notify:
     jobs:
