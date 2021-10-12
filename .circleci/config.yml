@@ -1,7 +1,23 @@
 version: 2.1
+
 orbs:
   node: circleci/node@4.7.0
   slack: circleci/slack@4.4.4
+
+commands:
+  slack-success:
+    steps:
+      - slack/notify:
+        event: pass
+        mentions: '@channel'
+        template: basic_success_1
+  slack-fail:
+    steps:
+      - slack/notify:
+          event: fail
+          mentions: "@channel"
+          template: basic_fail_1
+
 jobs:
   build-test-and-notify:
     executor:
@@ -12,14 +28,9 @@ jobs:
           name: Install dependencies
           command: npm install
       - run: npm test
-      - slack/notify:
-          event: pass
-          mentions: '@channel'
-          template: basic_success_1
-      - slack/notify:
-          event: fail
-          mentions: "@channel"
-          template: basic_fail_1
+      - slack-success
+      - slack-fail
+      
   build-test-and-notify-2:
     executor:
       name: node/default
@@ -29,14 +40,9 @@ jobs:
           name: Install dependencies
           command: npm install
       - run: npm test
-      - slack/notify:
-          event: pass
-          mentions: '@channel'
-          template: basic_success_1
-      - slack/notify:
-          event: fail
-          mentions: "@channel"
-          template: basic_fail_1
+      - slack-success
+      - slack-fail
+      
 workflows:
   build-and-notify:
     jobs:
