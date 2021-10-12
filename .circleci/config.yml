@@ -42,6 +42,20 @@ jobs:
       - run: npm test
       - slack-fail
 
+  build-test-and-notify-3:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Create Error
+          command: sed -i 's/Hello/Goodbye/g' test/app.e2e-spec.ts
+      - run: npm test
+      - slack-fail
+
   workflow-success:
     executor:
       name: node/default
@@ -58,8 +72,11 @@ workflows:
           context: slack-notifications
       - build-test-and-notify-2:
           context: slack-notifications
+      - build-test-and-notify-3:
+          context: slack-notifications
       - workflow-success:
           context: slack-notifications
           requires:
             - build-test-and-notify
             - build-test-and-notify-2
+            - build-test-and-notify-3
