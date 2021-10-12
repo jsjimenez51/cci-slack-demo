@@ -8,9 +8,10 @@ commands:
   slack-success:
     steps:
       - slack/notify:
-        event: pass
-        mentions: '@channel'
-        template: basic_success_1
+          event: pass
+          mentions: '@channel'
+          template: basic_success_1
+          
   slack-fail:
     steps:
       - slack/notify:
@@ -42,7 +43,7 @@ jobs:
       - run: npm test
       - slack-success
       - slack-fail
-      
+
 workflows:
   build-and-notify:
     jobs:
