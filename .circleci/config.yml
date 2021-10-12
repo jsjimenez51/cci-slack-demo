@@ -60,6 +60,6 @@ workflows:
           context: slack-notifications
       - workflow-success:
           context: slack-notifications
-        requires:
-          - build-test-and-notify
-          - build-test-and-notify-2
+          requires:
+            - build-test-and-notify
+            - build-test-and-notify-2
