@@ -20,8 +20,27 @@ jobs:
           event: fail
           mentions: "@channel"
           template: basic_fail_1
+  build-test-and-notify-2:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run: npm test
+      - slack/notify:
+          event: pass
+          mentions: '@channel'
+          template: basic_success_1
+      - slack/notify:
+          event: fail
+          mentions: "@channel"
+          template: basic_fail_1
 workflows:
   build-and-notify:
     jobs:
       - build-test-and-notify:
+          context: slack-notifications
+      - build-test-and-notify-2:
           context: slack-notifications
