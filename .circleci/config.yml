@@ -5,7 +5,7 @@ orbs:
   slack: circleci/slack@4.4.4
 
 commands:
-  slack-status:
+  slack-success:
     steps:
       - slack/notify:
           event: pass
