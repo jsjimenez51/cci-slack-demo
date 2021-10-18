@@ -5,6 +5,7 @@ orbs:
   slack: circleci/slack@4.4.4
 
 commands:
+  # Parameterize notifications by status
   slack-success:
     steps:
       - slack/notify:
@@ -20,6 +21,8 @@ commands:
           template: basic_fail_1
 
 jobs:
+  # For each independent test job or any other type of job ran in parallel, setup notifications for failure only
+  # This will ensure that notifications will be sent only for failed jobs
   build-test-and-notify:
     executor:
       name: node/default
@@ -56,24 +59,29 @@ jobs:
       - run: npm test
       - slack-fail
 
+  # Setup a workflow-success job for notification sending upon successful completion of all upstream jobs
+  # From here you can setup an Approval step or automatically continue pipeline based on success status
   workflow-success:
     executor:
       name: node/default
     steps:
       - run:
           name: Success
+          # This exit command it utilized to trigger a success status for notification delivery
           command: | 
             exit 0
       - slack-success
 workflows:
   build-and-notify:
     jobs:
+      # Setup test jobs in Fan-out process
       - build-test-and-notify:
           context: slack-notifications
       - build-test-and-notify-2:
           context: slack-notifications
       - build-test-and-notify-3:
           context: slack-notifications
+      # Utilize Fan-in process for notification execution
       - workflow-success:
           context: slack-notifications
           requires:
